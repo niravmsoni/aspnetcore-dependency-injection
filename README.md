@@ -21,3 +21,9 @@
 			- Not concerned with ordering of registrations 
 			- No need to worry about dependencies of each type. We have to register types individually and then DI container does the heavy lifting of creating instance of classes in the correct order with required dependencies automatically
 			- For ex: IProductSource is required as a dependency for IProductImporter service so, first DI container will resolve ProductSource and then ProductImporter
+
+		- Well known DI containers
+			- Autofac
+			- Ninject
+			- Unity (Discontinued)
+			- Microsoft.Extensions.DependencyInjection - Default with .NET core
