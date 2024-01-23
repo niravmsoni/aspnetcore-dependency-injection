@@ -37,3 +37,7 @@
 				- Second parameter is implementation type (Mostly an implementation of the interface)
 			serviceCollection.AddTransient<ProductImporter>();
 				- If service type is same as implementation type, we do not need an interface. We can register them directly
+
+		- Resolving Types
+			- host.Services.GetRequiredService<ProductImporter>();			
+				- When resolving, we request instance of service type. Container finds implementation type, instantiates if needed and returns to us
