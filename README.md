@@ -30,3 +30,10 @@
 			- Ninject
 			- Unity (Discontinued)
 			- Microsoft.Extensions.DependencyInjection - Default with .NET core
+
+		- Registering Types
+			serviceCollection.AddTransient<IProductSource, ProductSource>();
+				- First parameter is service type (Mostly interface)
+				- Second parameter is implementation type (Mostly an implementation of the interface)
+			serviceCollection.AddTransient<ProductImporter>();
+				- If service type is same as implementation type, we do not need an interface. We can register them directly
