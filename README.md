@@ -11,9 +11,12 @@
 			- Registration Phase (Prior to Build)
 				- Work with IServiceCollection class
 				- We decide lifetime of the class and add it to IServiceCollection class
+				- We register types in container so that it knows of their existence and when to construct them
+
 			- Resolving Phase (Post Build)
 				- Work with IServiceProvider class
 				- We request for class from DI container
+				- Container responsible for instantiating types and providing them when requested
 
 		- With DI in place,
 			- We are no longer dealing with object creation
