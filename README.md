@@ -4,6 +4,7 @@
 	- This is the pain point that DI solves. In-case if more than 1 classes require a common dependency, with DI, we register it in the container and then WE CAN REUSE the same dependency from DI container
 	- With larger solution, the number of dependencies will keep on increasing making code difficult to maintain
 
+	- Getting started
 	- NuGet package
 		- Install this package "Microsoft.Extensions.Hosting"
 		- This package contains "Microsoft.Extensions.DependencyInjection" which is required for using DI in .NET Core
@@ -56,3 +57,5 @@
 			- Depend upon abstractions (Mostly would be interfaces in C#) and not the classes
 			- Interfaces are OWNED by consumer. They should describe capabilities required by consumer. How a particular implementation would be achieved should not be taken into consideration when designing interfaces
 			- Have no assumptions about implementations
+
+	- Lifetime management
