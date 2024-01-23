@@ -41,3 +41,18 @@
 		- Resolving Types
 			- host.Services.GetRequiredService<ProductImporter>();			
 				- When resolving, we request instance of service type. Container finds implementation type, instantiates if needed and returns to us
+
+		- Dependency Inversion
+			- High level modules should not depend on low level modules. They should depend on abstractions
+
+		- Inversion of Control
+			- Framework controls which code is executed next and not our code
+			- .NET Core has Program as startup. It runs first. And likewise, the framework decides what classes it needs to request from DI container for ensuring our application runs
+
+		- Using DI container we are following both Dependency Inversion and Inversion of Control principle
+
+		- Creating maintainable solutions using DI
+			- Design classes with single responsibility
+			- Depend upon abstractions (Mostly would be interfaces in C#) and not the classes
+			- Interfaces are OWNED by consumer. They should describe capabilities required by consumer. How a particular implementation would be achieved should not be taken into consideration when designing interfaces
+			- Have no assumptions about implementations
