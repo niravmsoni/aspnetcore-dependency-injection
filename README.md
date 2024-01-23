@@ -14,3 +14,9 @@
 			- Resolving Phase (Post Build)
 				- Work with IServiceProvider class
 				- We request for class from DI container
+
+		- With DI in place,
+			- We are no longer dealing with object creation
+			- DI container calls constructors
+			- Not concerned with ordering of registrations 
+			- No need to worry about dependencies of each type. We have to register types individually and then DI container does the heavy lifting of creating instance of classes with required dependencies automatically
