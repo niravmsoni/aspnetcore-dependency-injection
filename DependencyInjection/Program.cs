@@ -15,7 +15,8 @@ using var host = Host.CreateDefaultBuilder(args)
 var productImporter = host.Services.GetRequiredService<ProductImporter>();
 productImporter.Run();
 
-
+//Creating configuration object once and passing it to multiple classes that require this as a dependency.
+//Works for smaller solutions but would be difficult for larger solutions
 var configuration = new Configuration();
 
 var priceParser = new PriceParser();
