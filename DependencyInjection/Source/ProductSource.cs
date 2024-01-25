@@ -8,13 +8,16 @@ public class ProductSource : IProductSource
 {
     private readonly Configuration _configuration;
     private readonly IPriceParser _priceParser;
-
+    private readonly IImportStatistics _importStatistics;
     private TextFieldParser? _textFieldParser;
 
-    public ProductSource(Configuration configuration, IPriceParser priceParser)
+    public ProductSource(Configuration configuration, 
+        IPriceParser priceParser,
+        IImportStatistics importStatistics)
     {
         _configuration = configuration;
         _priceParser = priceParser;
+        _importStatistics = importStatistics;
     }
 
     public void Open()
@@ -44,6 +47,7 @@ public class ProductSource : IProductSource
         var stock = int.Parse(fields[3]);
 
         var product = new Product(id, name, price, stock);
+        _importStatistics.IncrementImportCount();
         return product;
     }
 

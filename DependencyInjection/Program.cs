@@ -20,6 +20,7 @@ using var host = Host.CreateDefaultBuilder(args)
         services.AddTransient<IProductTarget, ProductTarget>();
 
         services.AddTransient<ProductImporter>();
+        services.AddTransient<IImportStatistics, ImportStatistics>();
 
         //Prior to build method, code is in registration Phase (Deals with IServiceCollection)
     })

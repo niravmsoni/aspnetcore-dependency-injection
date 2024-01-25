@@ -7,13 +7,16 @@ public class ProductTarget : IProductTarget
 {
     private readonly Configuration _configuration;
     private readonly IProductFormatter _productFormatter;
-
+    private readonly IImportStatistics _importStatistics;
     private StreamWriter? _streamWriter;
 
-    public ProductTarget(Configuration configuration, IProductFormatter productFormatter)
+    public ProductTarget(Configuration configuration, 
+        IProductFormatter productFormatter,
+        IImportStatistics importStatistics)
     {
         _configuration = configuration;
         _productFormatter = productFormatter;
+        _importStatistics = importStatistics;
     }
 
     public void Open()
@@ -31,6 +34,7 @@ public class ProductTarget : IProductTarget
 
         var productLine = _productFormatter.Format(product);
         _streamWriter.WriteLine(productLine);
+        _importStatistics.IncrementOutputCount();
     }
 
     public void Close()
