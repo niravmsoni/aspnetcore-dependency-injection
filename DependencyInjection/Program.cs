@@ -32,4 +32,22 @@ using var host = Host.CreateDefaultBuilder(args)
 
 //Here it's in resolving phase and code deals with class IServiceProvider
 var productImporter = host.Services.GetRequiredService<ProductImporter>();
+
+using var firstScope = host.Services.CreateScope();
+var resolvedOnce = firstScope.ServiceProvider.GetRequiredService<ProductImporter>();
+var resolvedTwice = firstScope.ServiceProvider.GetRequiredService<ProductImporter>();
+
+//True
+var isSameInFirstScope = Object.ReferenceEquals(resolvedTwice, resolvedOnce);
+
+using var secondScope = host.Services.CreateScope();
+var resolvedThrice = firstScope.ServiceProvider.GetRequiredService<ProductImporter>();
+var resolvedFourth = firstScope.ServiceProvider.GetRequiredService<ProductImporter>();
+
+//True
+var isSameInSecondScope = Object.ReferenceEquals(resolvedThrice, resolvedFourth);
+
+//False - Since we're comparing cross scope
+var IsSameInCrossScope = Object.ReferenceEquals(resolvedOnce, resolvedFourth);
+
 productImporter.Run();
