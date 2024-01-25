@@ -55,4 +55,5 @@ var productImporter = host.Services.GetRequiredService<ProductImporter>();
 //Console.WriteLine(isSameInSecondScope);
 //Console.WriteLine(IsSameInCrossScope);
 #endregion
+
 productImporter.Run();
