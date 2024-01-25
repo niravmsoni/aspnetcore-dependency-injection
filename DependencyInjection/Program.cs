@@ -19,7 +19,7 @@ using var host = Host.CreateDefaultBuilder(args)
         services.AddTransient<IProductFormatter, ProductFormatter>();
         services.AddTransient<IProductTarget, ProductTarget>();
 
-        services.AddScoped<ProductImporter>();
+        services.AddTransient<ProductImporter>();
 
         //Since this is registered as transient, we are getting new instance every-time we request this(ProductSource, ProductTarget and ProductImporter)
         //So in-essence there are 3 instances that get created for this svc.
@@ -33,24 +33,26 @@ using var host = Host.CreateDefaultBuilder(args)
 //Here it's in resolving phase and code deals with class IServiceProvider
 var productImporter = host.Services.GetRequiredService<ProductImporter>();
 
-using var firstScope = host.Services.CreateScope();
-var resolvedOnce = firstScope.ServiceProvider.GetRequiredService<ProductImporter>();
-var resolvedTwice = firstScope.ServiceProvider.GetRequiredService<ProductImporter>();
+#region Testing instance creation using DI
+//using var firstScope = host.Services.CreateScope();
+//var resolvedOnce = firstScope.ServiceProvider.GetRequiredService<ProductImporter>();
+//var resolvedTwice = firstScope.ServiceProvider.GetRequiredService<ProductImporter>();
 
-//True
-var isSameInFirstScope = Object.ReferenceEquals(resolvedTwice, resolvedOnce);
+////True
+//var isSameInFirstScope = Object.ReferenceEquals(resolvedTwice, resolvedOnce);
 
-using var secondScope = host.Services.CreateScope();
-var resolvedThrice = secondScope.ServiceProvider.GetRequiredService<ProductImporter>();
-var resolvedFourth = secondScope.ServiceProvider.GetRequiredService<ProductImporter>();
+//using var secondScope = host.Services.CreateScope();
+//var resolvedThrice = secondScope.ServiceProvider.GetRequiredService<ProductImporter>();
+//var resolvedFourth = secondScope.ServiceProvider.GetRequiredService<ProductImporter>();
 
-//True
-var isSameInSecondScope = Object.ReferenceEquals(resolvedThrice, resolvedFourth);
+////True
+//var isSameInSecondScope = Object.ReferenceEquals(resolvedThrice, resolvedFourth);
 
-//False - Since we're comparing cross scope
-var IsSameInCrossScope = Object.ReferenceEquals(resolvedOnce, resolvedFourth);
+////False - Since we're comparing cross scope
+//var IsSameInCrossScope = Object.ReferenceEquals(resolvedOnce, resolvedFourth);
 
-Console.WriteLine(isSameInFirstScope);
-Console.WriteLine(isSameInSecondScope);
-Console.WriteLine(IsSameInCrossScope);
+//Console.WriteLine(isSameInFirstScope);
+//Console.WriteLine(isSameInSecondScope);
+//Console.WriteLine(IsSameInCrossScope);
+#endregion
 productImporter.Run();
