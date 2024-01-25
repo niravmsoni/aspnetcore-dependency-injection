@@ -59,4 +59,11 @@
 			- Have no assumptions about implementations
 
 	- Lifetime management
-		- 
+		- Lifetime determins whether DI container will create a new instance?
+		- 3 types of lifetime
+			- Transient
+				- New instance is created every-time type is requested
+			- Singleton
+				- New instance is created ONCE and reused from then onwards
+			- Scoped
+				- New instance is created once per scope & then reused in scope
