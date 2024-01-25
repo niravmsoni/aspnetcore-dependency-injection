@@ -32,9 +32,9 @@ using var host = Host.CreateDefaultBuilder(args)
 
 //Here it's in resolving phase and code deals with class IServiceProvider
 var productImporter = host.Services.GetRequiredService<ProductImporter>();
-var resolvedOnce = host.Services.GetRequiredService<ProductImporter>();
-var resolvedTwice = host.Services.GetRequiredService<ProductImporter>();
+var resolvedOnce = host.Services.GetRequiredService<IImportStatistics>();
+var resolvedTwice = host.Services.GetRequiredService<IImportStatistics>();
 
-//Outputs false
+//Outputs true
 Console.Write(Object.ReferenceEquals(resolvedTwice, resolvedOnce));
 //productImporter.Run();
