@@ -19,7 +19,7 @@ using var host = Host.CreateDefaultBuilder(args)
         services.AddTransient<IProductFormatter, ProductFormatter>();
         services.AddTransient<IProductTarget, ProductTarget>();
 
-        services.AddTransient<ProductImporter>();
+        services.AddScoped<ProductImporter>();
 
         //Since this is registered as transient, we are getting new instance every-time we request this(ProductSource, ProductTarget and ProductImporter)
         //So in-essence there are 3 instances that get created for this svc.
@@ -41,8 +41,8 @@ var resolvedTwice = firstScope.ServiceProvider.GetRequiredService<ProductImporte
 var isSameInFirstScope = Object.ReferenceEquals(resolvedTwice, resolvedOnce);
 
 using var secondScope = host.Services.CreateScope();
-var resolvedThrice = firstScope.ServiceProvider.GetRequiredService<ProductImporter>();
-var resolvedFourth = firstScope.ServiceProvider.GetRequiredService<ProductImporter>();
+var resolvedThrice = secondScope.ServiceProvider.GetRequiredService<ProductImporter>();
+var resolvedFourth = secondScope.ServiceProvider.GetRequiredService<ProductImporter>();
 
 //True
 var isSameInSecondScope = Object.ReferenceEquals(resolvedThrice, resolvedFourth);
@@ -50,4 +50,7 @@ var isSameInSecondScope = Object.ReferenceEquals(resolvedThrice, resolvedFourth)
 //False - Since we're comparing cross scope
 var IsSameInCrossScope = Object.ReferenceEquals(resolvedOnce, resolvedFourth);
 
+Console.WriteLine(isSameInFirstScope);
+Console.WriteLine(isSameInSecondScope);
+Console.WriteLine(IsSameInCrossScope);
 productImporter.Run();
