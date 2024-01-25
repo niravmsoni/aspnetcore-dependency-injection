@@ -24,7 +24,7 @@ using var host = Host.CreateDefaultBuilder(args)
         //Since this is registered as transient, we are getting new instance every-time we request this(ProductSource, ProductTarget and ProductImporter)
         //So in-essence there are 3 instances that get created for this svc.
         //services.AddTransient<IImportStatistics, ImportStatistics>();
-        services.AddSingleton<IImportStatistics, ImportStatistics>();
+        services.AddScoped<IImportStatistics, ImportStatistics>();
 
         //Prior to build method, code is in registration Phase (Deals with IServiceCollection)
     })
@@ -32,9 +32,4 @@ using var host = Host.CreateDefaultBuilder(args)
 
 //Here it's in resolving phase and code deals with class IServiceProvider
 var productImporter = host.Services.GetRequiredService<ProductImporter>();
-var resolvedOnce = host.Services.GetRequiredService<IImportStatistics>();
-var resolvedTwice = host.Services.GetRequiredService<IImportStatistics>();
-
-//Outputs true
-Console.Write(Object.ReferenceEquals(resolvedTwice, resolvedOnce));
-//productImporter.Run();
+productImporter.Run();
