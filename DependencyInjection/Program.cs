@@ -23,7 +23,8 @@ using var host = Host.CreateDefaultBuilder(args)
 
         //Since this is registered as transient, we are getting new instance every-time we request this(ProductSource, ProductTarget and ProductImporter)
         //So in-essence there are 3 instances that get created for this svc.
-        services.AddTransient<IImportStatistics, ImportStatistics>();
+        //services.AddTransient<IImportStatistics, ImportStatistics>();
+        services.AddSingleton<IImportStatistics, ImportStatistics>();
 
         //Prior to build method, code is in registration Phase (Deals with IServiceCollection)
     })
