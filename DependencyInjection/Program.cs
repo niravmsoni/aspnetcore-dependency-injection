@@ -38,7 +38,13 @@ using var host = Host.CreateDefaultBuilder(args)
         services.AddScoped<IReferenceAdder, ReferenceAdder>();
 
         //Keeping this singleton since we want to share counter across all products
-        services.AddSingleton<IReferenceGenerator, ReferenceGenerator>();
+        //services.AddSingleton<IReferenceGenerator, ReferenceGenerator>();
+
+        //Changing Top level service to be Scoped
+        services.AddScoped<IReferenceGenerator, ReferenceGenerator>();
+
+        //Child class service to be singleton
+        services.AddSingleton<IIncrementingCounter, IncrementingCounter>();
         //Prior to build method, code is in registration Phase (Deals with IServiceCollection)
     })
     .Build();
