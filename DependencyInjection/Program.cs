@@ -6,6 +6,7 @@ using DependencyInjection.Transformation.Transformations;
 using DependencyInjection.Transformation;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using DependencyInjection.Util;
 
 // Creating default builder for application host
 using var host = Host.CreateDefaultBuilder(args)
@@ -28,11 +29,16 @@ using var host = Host.CreateDefaultBuilder(args)
         //services.AddTransient<IImportStatistics, ImportStatistics>();
         services.AddScoped<IImportStatistics, ImportStatistics>();
 
-        //services.AddTransient<IProductTransformer, ProductTransformer>();
+        services.AddTransient<IProductTransformer, ProductTransformer>();
         services.AddScoped<IProductTransformationContext, ProductTransformationContext>();
         services.AddScoped<INameDecapitaliser, NameDecapitaliser>();
         services.AddScoped<ICurrencyNormalizer, CurrencyNormalizer>();
 
+        services.AddScoped<IDateTimeProvider, DateTimeProvider>();
+        services.AddScoped<IReferenceAdder, ReferenceAdder>();
+
+        //Keeping this singleton since we want to share counter across all products
+        services.AddSingleton<IReferenceGenerator, ReferenceGenerator>();
         //Prior to build method, code is in registration Phase (Deals with IServiceCollection)
     })
     .Build();

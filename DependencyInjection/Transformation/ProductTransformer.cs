@@ -1,6 +1,7 @@
 ﻿using DependencyInjection.Model;
 using DependencyInjection.Shared;
 using DependencyInjection.Transformation.Transformations;
+using DependencyInjection.Util;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DependencyInjection.Transformation
@@ -40,10 +41,13 @@ namespace DependencyInjection.Transformation
 
             var nameCapitalizer = scope.ServiceProvider.GetRequiredService<INameDecapitaliser>();
             var currencyNormalizer = scope.ServiceProvider.GetRequiredService<ICurrencyNormalizer>();
+            var referenceAdder = scope.ServiceProvider.GetRequiredService<IReferenceAdder>();
 
             nameCapitalizer.Execute();
             currencyNormalizer.Execute();
+            referenceAdder.Execute();
 
+            Thread.Sleep(2000);
             // Check if prodyct has changed, if so increment count
             if (transformationContext.IsProductChanged())
             {

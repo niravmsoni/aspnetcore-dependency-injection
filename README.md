@@ -69,3 +69,5 @@
 				- New instance is created once per scope & then reused in scope
 
 		- Scoped - Detailed experimentation done on Scoped. Refer this repository - https://github.com/niravmsoni/aspnetcore-scoped-dependency-injection
+
+		- Dependency Captivity - Demonstrated here - https://github.com/niravmsoni/aspnetcore-dependency-captivity
