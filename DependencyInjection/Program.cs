@@ -2,6 +2,8 @@
 using DependencyInjection.Shared;
 using DependencyInjection.Source;
 using DependencyInjection.Target;
+using DependencyInjection.Transformation.Transformations;
+using DependencyInjection.Transformation;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -25,6 +27,12 @@ using var host = Host.CreateDefaultBuilder(args)
         //So in-essence there are 3 instances that get created for this svc.
         //services.AddTransient<IImportStatistics, ImportStatistics>();
         services.AddScoped<IImportStatistics, ImportStatistics>();
+
+        //services.AddTransient<IProductTransformer, ProductTransformer>();
+        services.AddTransient<IProductTransformer, ProductTransformerExperiment>();
+        services.AddScoped<IProductTransformationContext, ProductTransformationContext>();
+        services.AddScoped<INameDecapitaliser, NameDecapitaliser>();
+        services.AddScoped<ICurrencyNormalizer, CurrencyNormalizer>();
 
         //Prior to build method, code is in registration Phase (Deals with IServiceCollection)
     })

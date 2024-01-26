@@ -2,6 +2,9 @@
 
 namespace DependencyInjection.Transformation
 {
+    /// <summary>
+    /// Responsible for maintaining state of Product object.
+    /// </summary>
     public class ProductTransformationContext : IProductTransformationContext
     {
         private Product? _initialProduct;

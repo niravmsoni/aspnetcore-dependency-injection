@@ -31,7 +31,7 @@ public class ProductImporter
         {
             var product = _productSource.GetNextProduct();
 
-            //Applying transformation
+            //Calling this method to apply transformations per product
             var transformedProduct = _productTransformer.ApplyTransformations(product);
 
             _productTarget.AddProduct(transformedProduct);
