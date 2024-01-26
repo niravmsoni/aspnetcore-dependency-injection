@@ -29,7 +29,6 @@ using var host = Host.CreateDefaultBuilder(args)
         services.AddScoped<IImportStatistics, ImportStatistics>();
 
         //services.AddTransient<IProductTransformer, ProductTransformer>();
-        services.AddTransient<IProductTransformer, ProductTransformerExperiment>();
         services.AddScoped<IProductTransformationContext, ProductTransformationContext>();
         services.AddScoped<INameDecapitaliser, NameDecapitaliser>();
         services.AddScoped<ICurrencyNormalizer, CurrencyNormalizer>();
