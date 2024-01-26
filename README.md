@@ -68,4 +68,4 @@
 			- Scoped
 				- New instance is created once per scope & then reused in scope
 
-		- Detailed experimentation done on Scoped. Refer this repository - https://github.com/niravmsoni/aspnetcore-scoped-dependency-injection
+		- Scoped - Detailed experimentation done on Scoped. Refer this repository - https://github.com/niravmsoni/aspnetcore-scoped-dependency-injection
