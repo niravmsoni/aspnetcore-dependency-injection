@@ -3,14 +3,14 @@ using DependencyInjection.Model;
 
 namespace DependencyInjection.Target;
 
-public class ProductTarget : IProductTarget
+public class CsvProductTarget : IProductTarget
 {
     private readonly Configuration _configuration;
     private readonly IProductFormatter _productFormatter;
     private readonly IImportStatistics _importStatistics;
     private StreamWriter? _streamWriter;
 
-    public ProductTarget(Configuration configuration, 
+    public CsvProductTarget(Configuration configuration, 
         IProductFormatter productFormatter,
         IImportStatistics importStatistics)
     {

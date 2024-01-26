@@ -7,20 +7,22 @@ using DependencyInjection.Transformation;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using DependencyInjection.Util;
+using DependencyInjection.Target.EntityFramework;
+using Microsoft.EntityFrameworkCore;
 
 // Creating default builder for application host
 using var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((context, services) =>
     {
         //Add service to IServiceCollection
-        services.AddTransient<Configuration>();
+        services.AddSingleton<Configuration>();
 
         //Whenever IPriceParser is used as dependency, we would get PriceParser from DI container at runtime
         services.AddTransient<IPriceParser, PriceParser>();
         services.AddTransient<IProductSource, ProductSource>();
 
         services.AddTransient<IProductFormatter, ProductFormatter>();
-        services.AddTransient<IProductTarget, ProductTarget>();
+        services.AddTransient<IProductTarget, SqlProductTarget>();
 
         services.AddTransient<ProductImporter>();
 
@@ -36,16 +38,17 @@ using var host = Host.CreateDefaultBuilder(args)
 
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
         services.AddScoped<IReferenceAdder, ReferenceAdder>();
-
-        //Keeping this singleton since we want to share counter across all products
-        //services.AddSingleton<IReferenceGenerator, ReferenceGenerator>();
-
         //Changing Top level service to be Scoped
         services.AddScoped<IReferenceGenerator, ReferenceGenerator>();
 
         //Child class service to be singleton
         services.AddSingleton<IIncrementingCounter, IncrementingCounter>();
         //Prior to build method, code is in registration Phase (Deals with IServiceCollection)
+
+        //Registers all EFCore types
+        services.AddDbContext<TargetContext>(options =>
+        options.UseSqlServer(context.Configuration["TargetContextConnectionString"]));
+
     })
     .Build();
 

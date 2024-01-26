@@ -1,7 +1,11 @@
-﻿namespace DependencyInjection.Model;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace DependencyInjection.Model;
 
 public class Product
 {
+    private Product()
+    { }
     public Product(Guid id, string name, Money price, int stock)
         : this(id, name, price, stock, string.Empty)
     { }
@@ -15,11 +19,12 @@ public class Product
         Reference = reference;
     }
 
-    public Guid Id { get; }
-    public string Name { get; }
-    public Money Price { get; }
-    public int Stock { get; }
-    public string Reference { get; }
+    [Key]
+    public Guid Id { get; private set; }
+    public string Name { get; private set; }
+    public Money Price { get; private set; }
+    public int Stock { get; private set; }
+    public string Reference { get; private set; }
 
     public override bool Equals(object? obj)
     {
