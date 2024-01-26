@@ -71,3 +71,27 @@
 		- Scoped - Detailed experimentation done on Scoped. Refer this repository - https://github.com/niravmsoni/aspnetcore-scoped-dependency-injection
 
 		- Dependency Captivity - Demonstrated here - https://github.com/niravmsoni/aspnetcore-dependency-captivity
+
+		- How to choose lifetime?
+			- Depends on how implementing type handle state (Private fields and properties)
+			- How long these values are valid?
+
+			- If class has no state at all -> Choose transient
+			- If state derived from some other class or can be calculated on fly, -> Choose transient
+
+			- If state relates to single item, request or context & needs to be shared between depending classes -> choose scoped
+				- Class in web application provides info regarding logged in user
+				- .NET Core creates scope per request
+
+			- If state relates to everything in application -> Choose singleton
+				- App Configuration
+				- Try avoiding custom scopes. Ideally we should leave it to framework to decide
+
+			- When in doubt, err on side of transient
+
+			- Check framework (3rd party components which we are using)
+				- EFCore DbContext
+					- Lifetime should correspond to unit of work (Transaction). In practice - Scoped
+
+				- CosmosClient
+					- Is thread-safe and intended for re-use. Hence Since instance is recommended. So, use singleton
