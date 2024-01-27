@@ -95,3 +95,33 @@
 
 				- CosmosClient
 					- Is thread-safe and intended for re-use. Hence Since instance is recommended. So, use singleton
+
+	- Composition root (Promoting code reusability in case of more than 1 entry-points)
+		- Often times, we see the Program.cs overburdened with all the service registrations as well as the code to invoke/start the application.
+		- Problem
+			- With this structure we have 2 different things tied together i.e. EntryPoint and CompositionRoot
+			- If we want to run the importer from another application, we would not be able to do so cleanly since both components are closely tied together
+			- If we follow clean architecture practices, we typically have this structure
+				- WebAPI - Has reference of Domain, Application and Infrastructure projects
+				- Domain
+				- Application
+				- Infrastructure
+
+		- Solution
+			- Offloading responsibilities of doing the service registrations in a separate class library project
+			- All the registrations are done either in WebAPI.Program class or are done in respective project by writing extension methods on IServiceCollection
+			- A better way to deal with such registrations is by creating a CompositionRoot(Separate project).
+				- WebAPI - Has reference only of CompositionRoot project
+				- CompositionRoot - Has reference of Domain, Application and Infrastructure projects
+				- Domain
+				- Application
+				- Infrastructure
+
+		- Refer this repo for more details - https://github.com/niravmsoni/aspnet-core-refactoring-dependency-injection
+	
+	- Add{Lifetime} vs TryAdd{Lifetime}
+		- Add{Lifetime}
+			- If there is an existing registration for type, this will overwrite it
+
+		- TryAdd
+			- If there is an existing registration for type, this call will do nothing
